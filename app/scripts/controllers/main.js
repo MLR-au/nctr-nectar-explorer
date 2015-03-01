@@ -17,30 +17,6 @@ angular.module('nectarExplorerApp')
             })
         });
 
-        // redraw the view when zooming
-        var redraw = function() {
-            d3.select('svg').select('g').attr('transform', 'translate(' + d3.event.translate + ')' + ' scale(' + d3.event.scale + ')');
-        }
-
-        // calculate node / link positions during the simulation
-        var tick = function() {
-            path.attr("d", function(d) {
-                var dx = d.target.x - d.source.x,
-                    dy = d.target.y - d.source.y,
-                    dr = Math.sqrt(dx * dx + dy * dy);
-                return "M" + 
-                    d.source.x + "," + 
-                    d.source.y + "A" + 
-                    dr + "," + dr + " 0 0,1 " + 
-                    d.target.x + "," + 
-                    d.target.y;
-            });
-
-            node.attr('transform', function(d) {
-              return 'translate(' + d.x + ',' + d.y + ')';
-            });
-        }
-
 
         d3.json('data/data.json', function(error, json) {
             $scope.nodes = [];
@@ -68,9 +44,38 @@ angular.module('nectarExplorerApp')
         });
 
         function drawIt() {
+            // redraw the view when zooming
+            var redraw = function() {
+                d3.select('svg')
+                  .select('g')
+                  .attr('transform', 'translate(' + d3.event.translate + ')' + ' scale(' + d3.event.scale + ')');
+            }
+
+            // calculate node / link positions during the simulation
+            var tick = function() {
+                path.attr("d", function(d) {
+                    var dx = d.target.x - d.source.x,
+                        dy = d.target.y - d.source.y,
+                        dr = Math.sqrt(dx * dx + dy * dy);
+                    return "M" + 
+                        d.source.x + "," + 
+                        d.source.y + "A" + 
+                        dr + "," + dr + " 0 0,1 " + 
+                        d.target.x + "," + 
+                        d.target.y;
+                });
+
+                node.attr('transform', function(d) {
+                  return 'translate(' + d.x + ',' + d.y + ')';
+                });
+            }
+
+
             zoom = d3.behavior
-                         .zoom()
-                         .scaleExtent([0,8]).on('zoom', redraw);
+                     .zoom()
+                     .scale([0.5])
+                     .translate([w/5, h/6])
+                     .scaleExtent([0,8]).on('zoom', redraw);
 
             var force = d3.layout.force()
                 .nodes($scope.nodes)
@@ -95,7 +100,8 @@ angular.module('nectarExplorerApp')
             node = svg.selectAll('.node').data(force.nodes());
 
             // add the links
-            path.enter().append("svg:path")
+            path.enter()
+                .append("svg:path")
                 .attr("class", "link");
 
             //draw the nodes
@@ -168,6 +174,13 @@ angular.module('nectarExplorerApp')
             });
 
             force.start();
+
+            var z = d3.behavior.zoom(svg);
+            console.log(z.scale(), z.translate());
+            z.scale([0.5]);
+            z.translate([w/5, h/6]);
+            console.log(z.scale(), z.translate());
+            z.event(svg);
         }
 
         $scope.dismiss = function() {
