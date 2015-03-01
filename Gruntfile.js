@@ -18,6 +18,26 @@ module.exports = function (grunt) {
   // Define the configuration for all the tasks
   grunt.initConfig({
 
+    buildcontrol: {
+        options: {
+            dir: 'dist',
+            commit: true,
+            //push: true,
+          },
+        testing: {
+            options: {
+                //remote: 'git@bitbucket.org:esrc/cnex.git',
+                branch: 'testing'
+              }
+        },
+        production: {
+            options: {
+                //remote: 'git@bitbucket.org:esrc/cnex.git',
+                branch: 'production'
+            }
+        }
+    },
+
     // Project settings
     yeoman: {
       // configurable paths
@@ -284,7 +304,7 @@ module.exports = function (grunt) {
       ],
       dist: [
         'copy:styles',
-        'imagemin',
+        //'imagemin',
         'svgmin'
       ]
     },
