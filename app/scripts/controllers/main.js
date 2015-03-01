@@ -136,6 +136,9 @@ angular.module('nectarExplorerApp')
                 });
 
             node.append("text")
+                .filter(function(d) {
+                    if (d.id !== 'NeCTAR') { return true; }
+                })
                 .attr("dx", 12)
                 .attr("dy", ".35em")
                 .text(function(d) { return d.id })
