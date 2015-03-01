@@ -42,7 +42,7 @@ angular.module('nectarExplorerApp')
         }
 
 
-        d3.json('data.json', function(error, json) {
+        d3.json('data/data.json', function(error, json) {
             $scope.nodes = [];
             $scope.links = [];
             var links = [];
