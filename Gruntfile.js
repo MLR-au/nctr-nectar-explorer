@@ -26,13 +26,13 @@ module.exports = function (grunt) {
           },
         testing: {
             options: {
-                //remote: 'git@bitbucket.org:esrc/cnex.git',
+                remote: 'git@bitbucket.org:marcolarosa/nectar-explorer.git',
                 branch: 'testing'
               }
         },
         production: {
             options: {
-                //remote: 'git@bitbucket.org:esrc/cnex.git',
+                remote: 'git@bitbucket.org:marcolarosa/nectar-explorer.git',
                 branch: 'production'
             }
         }
