@@ -175,12 +175,6 @@ angular.module('nectarExplorerApp')
 
             force.start();
 
-            var z = d3.behavior.zoom(svg);
-            console.log(z.scale(), z.translate());
-            z.scale([0.5]);
-            z.translate([w/5, h/6]);
-            console.log(z.scale(), z.translate());
-            z.event(svg);
         }
 
         $scope.dismiss = function() {
