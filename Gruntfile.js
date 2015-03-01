@@ -22,7 +22,7 @@ module.exports = function (grunt) {
         options: {
             dir: 'dist',
             commit: true,
-            //push: true,
+            push: true,
           },
         testing: {
             options: {
