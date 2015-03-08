@@ -97,7 +97,24 @@ angular.module('nectarExplorerApp')
               .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
               .on("click", click);
 
-          nodeEnter.append("circle")
+          nodeEnter.filter(function(d) {
+                if (d.id === 'Virtual Laboratories') {
+                    return true;
+                }
+              })
+              .append('image')
+              .attr("xlink:href", "images/logo.png")
+              .attr("x", -100)
+              .attr("y", -50)
+              .attr("width", 100)
+              .attr("height", 100);
+
+          nodeEnter.filter(function(d) {
+                if (d.id !== 'Virtual Laboratories') {
+                    return true;
+                }
+              })
+              .append('circle')
               .attr("r", 1e-6)
               .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
 
@@ -118,6 +135,11 @@ angular.module('nectarExplorerApp')
               .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
 
           nodeUpdate.select("text")
+              .filter(function(d) {
+                  if (d.id !== 'Virtual Laboratories') {
+                      return true;
+                  }
+              })
               .style("fill-opacity", 1)
               .attr('x', function(d) {
                   var c = d.attributes.custom_class;
