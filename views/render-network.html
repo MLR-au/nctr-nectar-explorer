@@ -1,0 +1,22 @@
+<style>.node circle {
+  cursor: pointer;
+  stroke: #3182bd;
+  stroke-width: 1.5px;
+}
+
+.node text {
+  font: 10px sans-serif;
+  pointer-events: none;
+  text-anchor: middle;
+}
+
+line.link {
+  fill: none;
+  stroke: #9ecae1;
+  stroke-width: 1.5px;
+}
+path.link {
+  fill: none;
+  stroke: #666;
+  stroke-width: 3px;
+}</style><div style="position: fixed; z-index: 200; top: 0; left: 0; width: 100%; height: 100%; background-color: #ccc; opacity: 0.2" ng-if="nodeSelected" ng-click="dismiss()"></div><div ng-style="iframePanelStyle" ng-if="nodeSelected" class="animate-if"><iframe ng-src="{{targetUrl}}" width="{{iframeWidth}}" height="{{iframeHeight}}" ng-style="iframeStyle"></iframe></div><div ng-style="position"><div id="explorer"></div></div>
