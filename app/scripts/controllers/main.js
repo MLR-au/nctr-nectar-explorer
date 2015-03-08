@@ -1,24 +1,23 @@
 'use strict';
 
 angular.module('nectarExplorerApp')
-  .controller('MainCtrl', [ '$scope', '$window', '$sce', function ($scope, $window, $sce) {
-
+  .controller('MainCtrl', [ '$scope', '$window', '$sce', '$timeout', '$routeParams', '$location', 'Configuration', 'Helpers', 
+    function ($scope, $window, $sce, $timeout, $routeParams, $location, conf, Helpers) {
         var path, node, svg, zoom;
-        var w = $window.innerWidth,
-            h = $window.innerHeight;
+
 
         var wdw = angular.element($window);
         wdw.bind('resize', function() {
             $scope.$apply(function() {
-                d3.select('#explorer')
-                  .select('svg')
+                var e = angular.element(document.querySelector('#header'));
+                d3.select('svg')
                   .style('width', $window.innerWidth)
-                  .style('height', $window.innerHeight);
+                  .style('height', $window.innerHeight - e[0].clientHeight);
             })
         });
 
-
-        d3.json('data/data.json', function(error, json) {
+        var data = conf.load[$routeParams.load];
+        d3.json('data/' + data, function(error, json) {
             $scope.nodes = [];
             $scope.links = [];
             var links = [];
@@ -37,10 +36,33 @@ angular.module('nectarExplorerApp')
                     $scope.links.push(n);
                 })
                 $scope.nodes = json.nodes;
-                //console.log($scope.links, $scope.nodes);
-                drawIt();
-            });
 
+                var network = {
+                    'nodes': $scope.nodes,
+                    'links': $scope.links
+                };
+                var tree = Helpers.convertToTree(json);
+
+                $scope.drawNetwork = false;
+                $scope.drawTree = false;
+                if ($routeParams.as === 'network') {
+                    angular.forEach(tree.children, function(v, k) {
+                        tree.children[k]._children = v.children;
+                        tree.children[k].children = null;
+                        $scope.tree = tree;
+                    });
+                    $scope.drawTree = false;
+                    $scope.drawNetwork = true;
+                    $scope.explorationMethod = 'hierarchy';
+                    $scope.url = $location.url().replace('network', 'tree');
+                } else if ($routeParams.as === 'tree') {
+                    $scope.tree = tree;
+                    $scope.drawNetwork = false;
+                    $scope.drawTree = true;
+                    $scope.explorationMethod = 'network';
+                    $scope.url = $location.url().replace('tree', 'network');
+                }
+            });
         });
 
         function drawIt() {
@@ -113,7 +135,7 @@ angular.module('nectarExplorerApp')
                 .attr('class', 'node');
 
             node.filter(function(d) { 
-                    if (d.id === 'NeCTAR') {
+                    if (d.id === 'Virtual Laboratories') {
                         return true;
                     }
                 })
@@ -125,7 +147,7 @@ angular.module('nectarExplorerApp')
                 .attr("height", 200);
 
             node.filter(function(d) {
-                    if (d.id !== 'NeCTAR') {
+                    if (d.id !== 'Virtual Laboratories') {
                         return true;
                     }
                 })
@@ -137,7 +159,7 @@ angular.module('nectarExplorerApp')
 
             node.append("text")
                 .filter(function(d) {
-                    if (d.id !== 'NeCTAR') { return true; }
+                    if (d.id !== 'Virtual Laboratories') { return true; }
                 })
                 .attr("dx", 12)
                 .attr("dy", ".35em")

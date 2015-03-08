@@ -15,17 +15,25 @@ path.link {
     <iframe ng-src="{{targetUrl}}" width="{{iframeWidth}}" height="{{iframeHeight}}"  ng-style="iframeStyle"></iframe>
 </div>
 
-<div class="row" style="position: relative; z-index: 100; background-color: white;">
-    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+<div id="header" class="row" style="position: fixed; top: 0; left: 0; width: 100%; z-index: 100; padding: 10px;">
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
         <a class="" href="http://nectar.org.au">
             <img src="images/logo.png" />
             <img src="images/logo-title.png" />
         </a>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-        <span class="pull-right">
-            <img src="images/nectar-tag.png" />
-        </span>
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pull-right">
+                <img src="images/nectar-tag.png" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pull-right">
+                <a href="#{{url}}">Explore by {{explorationMethod}}</a>
+            </div>
+        </div>
     </div>
 </div>
-<div id="explorer"></div>
+<render-network ng-model="tree" ng-if="drawNetwork"></render-network>
+<render-tree ng-model="tree" ng-if="drawTree"></render-tree>

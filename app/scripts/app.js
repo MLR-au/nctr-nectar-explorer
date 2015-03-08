@@ -9,11 +9,11 @@ angular.module('nectarExplorerApp', [
 ])
   .config(function ($routeProvider) {
     $routeProvider
-      .when('/', {
+      .when('/:load/:as', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
       .otherwise({
-        redirectTo: '/'
+        redirectTo: '/vlabs/network'
       });
   });
