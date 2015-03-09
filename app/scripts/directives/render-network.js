@@ -207,9 +207,6 @@ angular.module('nectarExplorerApp')
               });
           }
         }
-        scope.dismiss = function() {
-            scope.nodeSelected = false;
-        }
 
         // Returns a list of all nodes under the root.
         function flatten(root) {
@@ -224,6 +221,14 @@ angular.module('nectarExplorerApp')
           recurse(root);
           return nodes;
         }
+
+        scope.dismiss = function() {
+            scope.nodeSelected = false;
+        }
+        scope.openPage = function() {
+            $window.location.href = scope.targetUrl;
+        }
+
       }
     };
   }]);

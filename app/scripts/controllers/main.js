@@ -65,6 +65,7 @@ angular.module('nectarExplorerApp')
             });
         });
 
+        /*
         function drawIt() {
             // redraw the view when zooming
             var redraw = function() {
@@ -201,9 +202,9 @@ angular.module('nectarExplorerApp')
             force.start();
 
         }
-
         $scope.dismiss = function() {
             $scope.nodeSelected = false;
         }
+        */
 
   }]);

@@ -3,7 +3,7 @@
 // as per http://bl.ocks.org/mbostock/4339083
 
 angular.module('nectarExplorerApp')
-  .directive('renderTree', [ '$window', '$sce', function ($window, $sce) {
+  .directive('renderTree', [ '$window', '$document', '$sce', function ($window, $document, $sce) {
     return {
       templateUrl: 'views/render-tree.html',
       restrict: 'E',
@@ -271,6 +271,9 @@ angular.module('nectarExplorerApp')
         }
         scope.dismiss = function() {
             scope.nodeSelected = false;
+        }
+        scope.openPage = function() {
+            $window.location.href = scope.targetUrl;
         }
 
 
