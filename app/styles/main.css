@@ -5,7 +5,6 @@ body {
 }
 
 .animate-if {
-    transition:0s linear all;
 }
 
 .animate-if.ng-enter {
